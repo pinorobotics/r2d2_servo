@@ -16,10 +16,14 @@ scale:
 # override_velocity_scaling_factor = 0.0 # valid range [0.0:1.0]
 
 ## Properties of outgoing commands
+#=======
 # When servo publishes movements too often the controller may not catch up with it
 # As the result robot will not move or move at the same position back and forth
-publish_period: 0.200  # 1/Nominal publish rate [seconds]
-low_latency_mode: false  # Set this to true to publish as soon as an incoming Twist command is received (publish_period is ignored)
+#=======
+#publish_period: 0.034  # 1/Nominal publish rate [seconds]
+publish_period: 0.200
+#low_latency_mode: false  # Set this to true to publish as soon as an incoming Twist command is received (publish_period is ignored)
+low_latency_mode: true
 
 # What type of topic does your robot driver expect?
 # Currently supported are std_msgs/Float64MultiArray or trajectory_msgs/JointTrajectory
@@ -27,7 +31,8 @@ command_out_type: trajectory_msgs/JointTrajectory
 
 # What to publish? Can save some bandwidth as most robots only require positions or velocities
 publish_joint_positions: true
-publish_joint_velocities: true
+#publish_joint_velocities: true
+publish_joint_velocities: false
 publish_joint_accelerations: false
 
 ## Plugins for smoothing outgoing commands
@@ -48,6 +53,9 @@ ee_frame_name: "Link_5"  # The name of the end effector link, used to return the
 robot_link_command_frame:  base_link  # commands must be given in the frame of a robot link. Usually either the base or end effector
 
 ## Stopping behaviour
+#=======
+# How long to keep moving robot in the same direction, after no more jog messages received from the user
+#=======
 incoming_command_timeout:  0.1  # Stop servoing if X seconds elapse without a new command
 # If 0, republish commands forever even if the robot is stationary. Otherwise, specify num. to publish.
 # Important because ROS may drop some messages and we need the robot to halt reliably.
@@ -57,8 +65,10 @@ num_outgoing_halt_msgs_to_publish: 4
 lower_singularity_threshold:  17.0  # Start decelerating when the condition number hits this (close to singularity)
 hard_stop_singularity_threshold: 30.0 # Stop when the condition number hits this
 
+#=======
 # Having this value too big may result in robot not be able to move at all
 # due to servo returning "servo_node Joint_* close to a position limit. Halting."
+#=======
 joint_limit_margin: 0.05 # added as a buffer to joint limits [radians]. If moving quickly, make this larger.
 leaving_singularity_threshold_multiplier: 2.0 # Multiply the hard stop limit by this when leaving singularity (see https://github.com/ros-planning/moveit2/pull/620)
 

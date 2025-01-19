@@ -29,7 +29,7 @@ from launch_ros.substitutions import FindPackageShare
 from launch_ros.descriptions import ParameterValue
 
 def generate_launch_description():
-  share_folder = FindPackageShare('r2d2_servo')
+  servo_folder = FindPackageShare('r2d2_servo')
   urdf_folder = FindPackageShare('r2d2_urdf')
   robot_description_content = Command([
           PathJoinSubstitution([FindExecutable(name="xacro")]),
@@ -49,7 +49,7 @@ def generate_launch_description():
   # Get parameters for the Servo node
   servo_config_content = xacro.load_yaml(servo_config_file)
 
-  rviz_config_file = PathJoinSubstitution([share_folder, "rviz", "servo.rviz"])
+  rviz_config_file = PathJoinSubstitution([servo_folder, "rviz", "servo.rviz"])
 
   return LaunchDescription([
       # robot_state_publisher
