@@ -1,4 +1,4 @@
-**r2d2** (ros2dorna2) - set of ROS2 packages which provide support for [Dorna2 robotic arm](https://dorna.ai/).
+[**r2d2** (ros2dorna2)](https://github.com/pinorobotics/r2d2) - set of ROS2 packages which provide support for [Dorna2 robotic arm](https://dorna.ai/).
 
 **r2d2_servo** package contains MoveIt2 Servo node for Dorna2 robotic arm.
 
@@ -17,6 +17,10 @@ source install/setup.zsh
 ``` bash
 ros2 launch r2d2_servo servo_launch.py
 ```
+
+# Documentation
+
+- [r2d2](https://github.com/pinorobotics/r2d2)
 
 # Contacts
 

@@ -28,9 +28,12 @@ from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 from launch_ros.descriptions import ParameterValue
 
+from launch.actions import ExecuteProcess
+
 def generate_launch_description():
-  servo_folder = FindPackageShare('r2d2_servo')
+  this_folder = FindPackageShare('r2d2_servo')
   urdf_folder = FindPackageShare('r2d2_urdf')
+  control_folder = FindPackageShare('r2d2_control')
   robot_description_content = Command([
           PathJoinSubstitution([FindExecutable(name="xacro")]),
           " ",
@@ -49,7 +52,7 @@ def generate_launch_description():
   # Get parameters for the Servo node
   servo_config_content = xacro.load_yaml(servo_config_file)
 
-  rviz_config_file = PathJoinSubstitution([servo_folder, "rviz", "servo.rviz"])
+  rviz_config_file = PathJoinSubstitution([this_folder, "rviz", "servo.rviz"])
 
   return LaunchDescription([
       # robot_state_publisher
@@ -65,6 +68,15 @@ def generate_launch_description():
         name='rviz2',
         output='screen',
         arguments=['-d', rviz_config_file]),
+      # Run Java based r2d2_control controller
+      # Make sure to build r2d2_control package by following instructions inside it
+      # See r2d2_control documentation for all supported options
+      ExecuteProcess(
+        cmd=['java',
+             '-jar', PathJoinSubstitution([control_folder, "libs", "r2d2_control.jar"]),
+             '-moveItConfigPath=' + str(moveit_config.package_path),
+             '-debug=true'],
+        output='screen'),
       Node(
         package="moveit_servo",
         executable="servo_node_main",
