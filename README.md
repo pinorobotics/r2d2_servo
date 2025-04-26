@@ -6,6 +6,13 @@ NOTE: This is unofficial Dorna ROS2 package. For official Dorna software follow 
 
 # Build
 
+Build Dorna2 controller:
+```
+cd r2d2_control
+gradle clean build
+```
+
+Build ROS packages:
 ```
 cd <ROS WORKSPACE>
 colcon build
@@ -17,6 +24,8 @@ source install/setup.zsh
 ``` bash
 ros2 launch r2d2_servo servo_launch.py
 ```
+
+Edit "servo_launch.py" in order to change Dorna controller default settings.
 
 # Documentation
 

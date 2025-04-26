@@ -74,6 +74,7 @@ def generate_launch_description():
       ExecuteProcess(
         cmd=['java',
              '-jar', PathJoinSubstitution([control_folder, "libs", "r2d2_control.jar"]),
+             '-dornaUrl=ws://dorna:443',
              '-moveItConfigPath=' + str(moveit_config.package_path),
              '-debug=true'],
         output='screen'),
