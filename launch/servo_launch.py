@@ -75,12 +75,15 @@ def generate_launch_description():
         cmd=['java',
              '-jar', PathJoinSubstitution([control_folder, "libs", "r2d2_control.jar"]),
              '-dornaUrl=ws://dorna:443',
+             '-dornaAcceleration=250',
+             '-dornaJerk=4000',
              '-moveItConfigPath=' + str(moveit_config.package_path),
+             '-broadcastRateInMillis=100',
              '-debug=true'],
         output='screen'),
       Node(
         package="moveit_servo",
-        executable="servo_node_main",
+        executable="servo_node",
         parameters=[
           {"moveit_servo": servo_config_content},
           moveit_config.robot_description,
